@@ -1,0 +1,16 @@
+// Display our recent posts, filter out sticky posts and links
+
+$recent_args = array(
+	'order' => 'DESC',
+	'cat' => '-27',
+	'no_found_rows' => true,
+	'post__not_in' => get_option( 'sticky_posts' ),
+	'tax_query' => array(
+		array(
+			'taxonomy' => 'post_format',
+			'terms' => array( 'post-format-link' ),
+			'field' => 'slug',
+			'operator' => 'NOT IN',
+		),
+	),
+);
