@@ -1,0 +1,33 @@
+
+<?php // LOOK THRU ALL POSTS FOR A CHECKED CHECKBOX AND DISPLAY THE NEWEST ONE ?>
+			<?php				
+				$args = array(
+			  	'meta_query' => array(
+			    	array (
+			      	'key' => 'fp_confirm',
+			        'value'=>'1'
+			        )
+			      ),
+					'posts_per_page' => '1'
+					);
+
+				query_posts( $args ); 
+
+				// The Loop
+				if ( have_posts() ) : the_post();
+				?>
+
+					<?php if(get_field('fp_confirm') == '1') { ?>
+						<div class="newshub">
+							<article class="featurebox">
+								<h4 class="featuresub">Featured article</h4>
+								<h2><a href="<?php the_permalink(); ?>" title="Read <?php the_title_attribute(); ?>"><?php if(get_field('fp_title')) echo the_field('fp_title'); else the_title(); ?></a></h2>
+								<p><?php if(get_field('fp_blurb')) echo the_field('fp_blurb'); ?></p>
+								<div><a href="<?php the_permalink();?>" class="morelink" title="<?php the_title();?>">Full Article&nbsp;&rarr;</a></div>
+							</article>
+						</div>
+						<hr class="clr">
+					<?php } ?>						
+				<?php endif;  ?>
+				
+				<?php wp_reset_query(); ?>
